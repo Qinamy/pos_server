@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Services;
 use Log;
 
-class GoodsService
+class CartService
 {
 
     public static $all_param_names = ['barcode','mobile','goods','shop_id'];
@@ -17,7 +17,7 @@ class GoodsService
     public static function getParams($request,$necessary_param_names,$all_param_names = null)
     {
 
-        return UtilService::getParams($request,$necessary_param_names,$all_param_names ?? self::$all_param_names);
+        return UtilService::getParams($request,$necessary_param_names,$all_param_names ?? self::$all_param_names,self::property_translate);
 
     }
 
@@ -39,6 +39,10 @@ class GoodsService
 
         return $msg;
     }
+
+//    public static function add($params)
+//    {
+//    }
 
 
 

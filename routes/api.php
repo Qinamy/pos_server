@@ -21,3 +21,5 @@ use Illuminate\Support\Facades\Route;
 Route::any('/goods/add','Api\GoodsController@add');
 
 Route::any('/barcode/query','Api\GoodsController@query');
+
+Route::any('/payment/create','Api\PaymentController@pay');

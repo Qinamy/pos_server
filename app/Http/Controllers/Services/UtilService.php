@@ -12,25 +12,27 @@ use Log;
 class UtilService
 {
 
+    const SECRET = 'bbf5a23972c74861345d9f1ef1331db0';
+
+    const property_translate = [
+        'mobile' => '手机号',
+        'shop_id' => '商铺Id'
+    ];
 
     /**
      * @param $request  //读取所有输入参数
      * @param $necessary_param_names    //必须传入的参数
      * @param $all_param_names  //所有可能用到的参数
-     * @param $member_flag  //返回的params中是否添加member，是否判断member表中有记录
-     * @param $settle_account_flag  //返回的params中是否添加settle_account记录
-     * @param $merchant_flag  //返回的params中是否添加merchant记录
      * @return array    //  成功：返回参数数组   失败：返回错误信息
      */
-    public static function getParams($request,$necessary_param_names,$all_param_names)
+    public static function getParams($request,$necessary_param_names,$all_param_names,$property_translate = null)
     {
         $params = $request->only($all_param_names);
 
         $msg = '';
         foreach($necessary_param_names as $name)
             if(empty($params[$name]))
-                $msg .= $name.' ';
-
+                $msg= ( empty($msg) ? '' : $msg.',' ). $property_translate[$name];
 
         if(!empty($msg))
             return [

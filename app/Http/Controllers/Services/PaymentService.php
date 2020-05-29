@@ -4,14 +4,21 @@
 namespace App\Http\Controllers\Services;
 use Log;
 
-class GoodsService
+class PaymentService
 {
 
-    public static $all_param_names = ['barcode','mobile','goods','shop_id'];
+    public static $all_param_names = ['mobile','pay_channel','pay_amt',
+            'goods_title','goods_desc','auth_code','notify_url'
+        ];
 
     const property_translate = [
-        'price' => '售价',
-        'barcode' => '条码'
+        'mobile' => '手机号',
+        'pay_channel' => '支付渠道',
+        'pay_amt' => '支付金额',
+        'goods_title' => '商品标题',
+        'goods_desc' => '商品描述信息',
+        'auth_code' => '付款码',
+        'notify_url' => '回调地址',
     ];
 
     public static function getParams($request,$necessary_param_names,$all_param_names = null)
@@ -39,6 +46,10 @@ class GoodsService
 
         return $msg;
     }
+
+//    public static function add($params)
+//    {
+//    }
 
 
 
