@@ -66,7 +66,7 @@ class GoodsController extends BaseController
                 'user_id' => $user->id,
                 'barcode' => $params['goods']['barcode'],
                 'shop_id' => $params['shop_id'],
-                'name' => $params['goods']['name'] ?? $temp_name,
+                'name' => $params['goods']['name'] ?? '未命名',
                 'price' => $params['goods']['price'],
                 'thumb' => $params['goods']['thumb'] ?? ''
             ]);
