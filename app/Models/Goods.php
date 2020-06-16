@@ -10,12 +10,18 @@ class Goods extends Model
     protected $table='goods';
 
     protected $fillable = [
-        'user_id',
+        'goods_id',
+        'cashier_id',
         'barcode',
         'shop_id',
         'name',
         'price',
         'thumb'
+    ];
+
+    protected $casts = [
+        'price' => 'string',
+        'barcode' => 'string'
     ];
 
 }

@@ -18,8 +18,12 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::any('/goods/add','Api\GoodsController@add');
+Route::any('/goods/modify','Api\GoodsController@modify');
+
+Route::any('/goods/sync','Api\GoodsController@sync');
 
 Route::any('/barcode/query','Api\GoodsController@query');
 
 Route::any('/payment/create','Api\PaymentController@pay');
+
+Route::any('/order/add','Api\OrderController@add');

@@ -4,21 +4,14 @@
 namespace App\Http\Controllers\Services;
 use Log;
 
-class PaymentService
+class OrderService
 {
 
-    public static $all_param_names = ['mobile','pay_channel','pay_amt','cashier_id',
-            'goods_title','goods_desc','auth_code','notify_url'
-        ];
+    public static $all_param_names = ['shop_id','cashier_id','carts','price'];
 
     const property_translate = [
-        'mobile' => '手机号',
-        'pay_channel' => '支付渠道',
-        'pay_amt' => '支付金额',
-        'goods_title' => '商品标题',
-        'goods_desc' => '商品描述信息',
-        'auth_code' => '付款码',
-        'notify_url' => '回调地址',
+        'price' => '售价',
+        'barcode' => '条码'
     ];
 
     public static function getParams($request,$necessary_param_names,$all_param_names = null)
@@ -46,13 +39,6 @@ class PaymentService
 
         return $msg;
     }
-
-
-
-
-//    public static function add($params)
-//    {
-//    }
 
 
 

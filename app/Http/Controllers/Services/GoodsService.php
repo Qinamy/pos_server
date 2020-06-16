@@ -7,7 +7,7 @@ use Log;
 class GoodsService
 {
 
-    public static $all_param_names = ['barcode','mobile','goods','shop_id'];
+    public static $all_param_names = ['barcode','cashier_id','goods','shop_id','cashier_id'];
 
     const property_translate = [
         'price' => '售价',
