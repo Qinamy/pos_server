@@ -86,6 +86,7 @@ class OrderController extends BaseController
         try {
             DB::beginTransaction();
             $order = Order::create([
+                'order_no' => 'P'.Carbon::now()->format('YmdHisu'),
                 'cashier_id' => $params['cashier_id'],
                 'shop_id' => $params['shop_id'],
                 'price' => $price,
@@ -103,53 +104,20 @@ class OrderController extends BaseController
         }
         catch(\Exception $e){
             Log::error($e->getMessage());
+            return [
+                'code' => 300,
+                'msg' => '数据库忙，请稍后重试'
+            ];
         }
 
 
 
         Log::notice('@@'.PHP_EOL.PHP_EOL.json_encode($params));
         return [
-            'code' => 200
+            'code' => 200,
+            'order_no' => $order->order_no
         ];
 
-        $params = GoodsService::getParams($request,['goods','mobile','shop_id']);
-
-        if(!empty($params['msg'])){
-            JsonResultException::throwJsonResultException(300,$params['msg']);
-        }
-
-        //判断goods对象中的必传属性是否传入了
-        $msg = GoodsService::checkGoodsAddParams($params['goods'],['price','barcode']);
-        if(!empty($msg)){
-            JsonResultException::throwJsonResultException(300,$msg);
-        }
-
-        Log::notice('@@'.PHP_EOL.PHP_EOL.json_encode($params));
-
-        //判断mobile是否有该shop_id的权限
-
-        $user = User::where('mobile',$params['mobile'])->first();
-        $goods = Goods::where('barcode',$params['goods']['barcode'])->first();
-        $barcode_length = strlen($params['goods']['barcode']);
-        $temp_name = '条码尾号'.substr($params['goods']['barcode'],$barcode_length-6,6);
-        if(empty($goods)){
-            Goods::create([
-                'user_id' => $user->id,
-                'barcode' => $params['goods']['barcode'],
-                'shop_id' => $params['shop_id'],
-                'name' => $params['goods']['name'] ?? '未命名',
-                'price' => $params['goods']['price'],
-                'thumb' => $params['goods']['thumb'] ?? ''
-            ]);
-        }
-        else{
-            $goods->price = $params['goods']['price'];
-            $goods->save();
-//            JsonResultException::throwJsonResultException(300,'已添加商品不可重复添加');
-        }
-
-        //将该商品添加到购物车中
-//        CartService::add($params);
 
     }
 }
